@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Projects</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ✅ 상단 내비게이션 -->
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+  </nav>
+
+  <h1>Projects</h1>
+
+  <!-- ✅ 통합 스타일 적용용 클래스 포함 -->
+  <div id="project-list" class="item-list">로딩 중...</div>
+
+  <script>
+    // ✅ 여기에 프로젝트 md 파일명 수동 등록
+    const projects = [
+      'my-app.md',
+    ];
+
+    const list = document.getElementById('project-list');
+    list.innerHTML = '';
+
+    projects.forEach(file => {
+      fetch(`projects/${file}`)
+        .then(res => res.text())
+        .then(text => {
+          // 메타데이터 파싱
+          const titleMatch = text.match(/title:\s*(.+)/);
+          const dateMatch = text.match(/date:\s*(.+)/);
+          const tagsMatch = text.match(/tags:\s*\[(.+?)\]/);
+
+          const title = titleMatch ? titleMatch[1].trim() : file;
+          const date = dateMatch ? dateMatch[1].trim() : '';
+          const tags = tagsMatch ? tagsMatch[1].split(',').map(tag => tag.trim()) : [];
+
+          // ✅ <div class="item"> 생성
+          const item = document.createElement('div');
+          item.classList.add('item');
+
+          const a = document.createElement('a');
+          a.href = `viewer.html?type=project&file=${file}`;
+          a.textContent = title;
+
+          const info = document.createElement('small');
+          info.textContent = `📅 ${date} | 🏷 ${tags.join(', ')}`;
+
+          item.appendChild(a);
+          item.appendChild(document.createElement('br'));
+          item.appendChild(info);
+
+          list.appendChild(item);
+        })
+        .catch(err => {
+          console.error(`❌ ${file} 읽기 실패`, err);
+        });
+    });
+  </script>
+
+</body>
+</html>

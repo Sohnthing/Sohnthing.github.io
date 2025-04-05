@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>My Blog</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ✅ 상단 내비게이션 -->
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+  </nav>
+
+  <h1>Sohnthing</h1>
+  <h6>by HAN SOHN</h6>
+
+  <!-- ✅ 소개글 -->
+  <section class="intro">
+    <p>
+      이것저것 만들기를 좋아합니다.  
+      아티클이든, 동화든, 어플이든 어떤 형태든 상관없어요.  
+      기능과 디자인, 그리고 스토리까지 함께 어우러진 결과물에 매력을 느낍니다.
+    </p>
+    <p>
+      그런 것들을 좋아하는 분이라면, 잘 찾아오셨어요.  
+      이곳은 만들고, 기록하고, 공유하는 제 작은 아카이브입니다.
+    </p>
+  </section>
+
+  <!-- ✅ 글 목록 리스트 (공통 스타일 적용) -->
+  <ul id="post-list" class="item-list">로딩 중...</ul>
+
+  <script>
+    const posts = [
+      "first-post.md",
+      "swift2.md",
+      "swift3.md"
+    ];
+
+    const listElement = document.getElementById('post-list');
+    listElement.innerHTML = '';
+
+    posts.forEach(filename => {
+      fetch(`posts/${filename}`)
+        .then(response => response.text())
+        .then(text => {
+          const titleMatch = text.match(/title:\s*(.+)/);
+          const dateMatch = text.match(/date:\s*(.+)/);
+          const tagsMatch = text.match(/tags:\s*\[(.+?)\]/);
+
+          const title = titleMatch ? titleMatch[1].trim() : filename;
+          const date = dateMatch ? dateMatch[1].trim() : '';
+          const tags = tagsMatch ? tagsMatch[1].split(',').map(tag => tag.trim()) : [];
+
+          const li = document.createElement('li');
+          li.classList.add('item'); // ✅ 공통 클래스 추가
+
+          const a = document.createElement('a');
+          a.href = `viewer.html?type=post&file=${filename}`;
+          a.textContent = title;
+
+          const info = document.createElement('small');
+          info.textContent = `${date} | ${tags.join(', ')}`;
+
+          li.appendChild(a);
+          li.appendChild(document.createElement('br'));
+          li.appendChild(info);
+
+          listElement.appendChild(li);
+        })
+        .catch(err => {
+          console.error(`❌ ${filename} 읽기 실패:`, err);
+        });
+    });
+  </script>
+
+</body>
+</html>
