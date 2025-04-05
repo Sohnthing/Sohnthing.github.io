@@ -36,7 +36,8 @@
         return;
       }
 
-      const folder = type === 'post' ? 'posts' : 'projects';
+      const folder = type === 'post' ? './posts' : './projects';
+
       const filePath = `${folder}/${file}`;
       const fullUrl = `${location.origin}${location.pathname}?type=${type}&file=${file}`;
 
