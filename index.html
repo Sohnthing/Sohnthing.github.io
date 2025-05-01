@@ -13,8 +13,8 @@
     <a href="projects.html">Projects</a>
   </nav>
 
-  <h1>Sohnthing</h1>
-  <h6>by HAN SOHN</h6>
+  <h1>Han's Farm</h1>
+  <h6>by HAN</h6>
 
   <!-- ✅ 소개글 -->
   <section class="intro">
@@ -29,52 +29,20 @@
     </p>
   </section>
 
-  <!-- ✅ 글 목록 리스트 (공통 스타일 적용) -->
-  <ul id="post-list" class="item-list">로딩 중...</ul>
+ <!-- ✅ 올해의 포스트 목록 -->
+  <ul class="item-list">
+    <li class="item">
+      <a href="posts/2025/2025-05-01-test.html">Minimal Blog</a>
+      <small>2025-05-01</small>
+    </li>
+    <li class="item">
+      <a href="posts/2025/2025-05-02-swift-tips.html">Swift Tips</a>
+      <small>2025-05-02</small>
+    </li>
+    <!-- ✨ 매일 여기만 복붙해서 추가하면 끝 -->
+  </ul>
+  
 
-  <script>
-    const posts = [
-      "first-post.md",
-      "swift2.md",
-      "swift3.md"
-    ];
-
-    const listElement = document.getElementById('post-list');
-    listElement.innerHTML = '';
-
-    posts.forEach(filename => {
-      fetch(`./posts/${filename}`)
-        .then(response => response.text())
-        .then(text => {
-          const titleMatch = text.match(/title:\s*(.+)/);
-          const dateMatch = text.match(/date:\s*(.+)/);
-          const tagsMatch = text.match(/tags:\s*\[(.+?)\]/);
-
-          const title = titleMatch ? titleMatch[1].trim() : filename;
-          const date = dateMatch ? dateMatch[1].trim() : '';
-          const tags = tagsMatch ? tagsMatch[1].split(',').map(tag => tag.trim()) : [];
-
-          const li = document.createElement('li');
-          li.classList.add('item'); // ✅ 공통 클래스 추가
-
-          const a = document.createElement('a');
-          a.href = `viewer.html?type=post&file=${filename}`;
-          a.textContent = title;
-
-          const info = document.createElement('small');
-          info.textContent = `${date} | ${tags.join(', ')}`;
-
-          li.appendChild(a);
-          li.appendChild(document.createElement('br'));
-          li.appendChild(info);
-
-          listElement.appendChild(li);
-        })
-        .catch(err => {
-          console.error(`❌ ${filename} 읽기 실패:`, err);
-        });
-    });
-  </script>
 
 </body>
 </html>
