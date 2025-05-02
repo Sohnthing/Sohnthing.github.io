@@ -2,7 +2,7 @@
 body {
     max-width: 600px;
     margin: 60px auto;
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica', 'Arial', sans-serif;
     background-color: #fffaf0; /* 크림색 배경 */
     color: #222;
     padding: 20px;
@@ -125,7 +125,6 @@ body {
   
   .item a:hover {
     color: #bf1b1b;
-    text-decoration: underline;
   }
   
   .item small {
@@ -135,26 +134,45 @@ body {
     font-size: 0.9rem;
   }
 
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #212121;
+      color: #e0e0e0;
+    }
   
+    a {
+      color: #e0e0e0;
+    }
   
-  /* 📋 링크 복사 버튼 (원형) */
-  .share-buttons {
-    margin-top: 2rem;
+    a:hover {
+      color: #bf1b1b;
+    }
+  
+    h1 {
+      border-bottom: 1px solid #444;
+    }
+  
+    pre {
+      background-color: #1e1e1e;
+    }
+  
+    code {
+      background-color: #2a2a2a;
+    }
+  
+    .intro,
+    small,
+    .item a,
+    .item small {
+      color: #ccc;
+    }
+  
+    .item {
+      border-bottom: 1px solid #333;
+    }
+  
+
   }
   
-  #copy-link {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: none;
-    font-size: 1.2rem;
-    background-color: #ed8008;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  #copy-link:hover {
-    background-color: #c96b04;
-  }
   
